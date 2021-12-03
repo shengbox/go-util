@@ -2,8 +2,9 @@ package mail
 
 import (
 	"fmt"
-	"gopkg.in/gomail.v2"
 	"strings"
+
+	"gopkg.in/gomail.v2"
 )
 
 type Options struct {

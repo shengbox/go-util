@@ -14,7 +14,7 @@ func GetCurrentUnix() int64 {
 
 // 获取当前的时间 - 毫秒级时间戳
 func GetCurrentMilliUnix() int64 {
-	return time.Now().UnixNano() / 1000000
+	return time.Now().UnixMilli()
 }
 
 // 获取当前的时间 - 纳秒级时间戳

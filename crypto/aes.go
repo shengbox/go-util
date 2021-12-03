@@ -1,4 +1,4 @@
-package aes
+package crypto
 
 import (
 	"bytes"
@@ -8,9 +8,9 @@ import (
 )
 
 // 加密 aes_128_cbc
-func Encrypt (encryptStr string, key []byte, iv string) (string, error) {
+func AseEncrypt(encryptStr string, key []byte, iv string) (string, error) {
 	encryptBytes := []byte(encryptStr)
-	block, err   := aes.NewCipher(key)
+	block, err := aes.NewCipher(key)
 	if err != nil {
 		return "", err
 	}
@@ -25,7 +25,7 @@ func Encrypt (encryptStr string, key []byte, iv string) (string, error) {
 }
 
 // 解密
-func Decrypt (decryptStr string, key []byte, iv string) (string, error) {
+func AseDecrypt(decryptStr string, key []byte, iv string) (string, error) {
 	decryptBytes, err := base64.URLEncoding.DecodeString(decryptStr)
 	if err != nil {
 		return "", err
@@ -44,15 +44,14 @@ func Decrypt (decryptStr string, key []byte, iv string) (string, error) {
 	return string(decrypted), nil
 }
 
-func pkcs5Padding (cipherText []byte, blockSize int) []byte {
+func pkcs5Padding(cipherText []byte, blockSize int) []byte {
 	padding := blockSize - len(cipherText)%blockSize
 	padText := bytes.Repeat([]byte{byte(padding)}, padding)
 	return append(cipherText, padText...)
 }
 
-func pkcs5UnPadding (decrypted []byte) []byte {
+func pkcs5UnPadding(decrypted []byte) []byte {
 	length := len(decrypted)
 	unPadding := int(decrypted[length-1])
 	return decrypted[:(length - unPadding)]
 }
-

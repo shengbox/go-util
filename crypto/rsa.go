@@ -1,4 +1,4 @@
-package rsa
+package crypto
 
 import (
 	"crypto/rand"
@@ -20,7 +20,7 @@ func PublicEncrypt(encryptStr string, path string) (string, error) {
 
 	// 读取文件内容
 	info, _ := file.Stat()
-	buf := make([]byte,info.Size())
+	buf := make([]byte, info.Size())
 	file.Read(buf)
 
 	// pem 解码
@@ -56,7 +56,7 @@ func PrivateDecrypt(decryptStr string, path string) (string, error) {
 
 	// 获取文件内容
 	info, _ := file.Stat()
-	buf := make([]byte,info.Size())
+	buf := make([]byte, info.Size())
 	file.Read(buf)
 
 	// pem 解码
@@ -70,9 +70,8 @@ func PrivateDecrypt(decryptStr string, path string) (string, error) {
 	decryptBytes, err := base64.URLEncoding.DecodeString(decryptStr)
 
 	//对密文进行解密
-	decrypted, _ := rsa.DecryptPKCS1v15(rand.Reader,privateKey,decryptBytes)
+	decrypted, _ := rsa.DecryptPKCS1v15(rand.Reader, privateKey, decryptBytes)
 
 	//返回明文
 	return string(decrypted), nil
 }
-
