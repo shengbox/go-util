@@ -1,11 +1,11 @@
 # go-util
 
-Go 工具包，已停止维护！建议使用 [go-gin-api](https://github.com/xinliangnote/go-gin-api) 项目下 `/pkg` 目录的包。
+来源于github.com/xinliangnote/go-util。
 
 ## 安装
 
 ```go
-go get github.com/xinliangnote/go-util
+go get github.com/shengbox/go-util
 ```
 
 ## 方法
@@ -62,7 +62,4 @@ go get github.com/xinliangnote/go-util
 - gomail.v2：gopkg.in/gomail.v2
 - go-hashids：github.com/speps/go-hashids
 
-## 一起学习
-
-![](https://github.com/xinliangnote/Go/blob/master/00-基础语法/images/qr.jpg)
 
