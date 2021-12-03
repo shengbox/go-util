@@ -9,7 +9,6 @@ func Empty(val interface{}) bool {
 	if val == nil {
 		return true
 	}
-
 	v := reflect.ValueOf(val)
 	switch v.Kind() {
 	case reflect.String, reflect.Array:
@@ -27,6 +26,5 @@ func Empty(val interface{}) bool {
 	case reflect.Interface, reflect.Ptr:
 		return v.IsNil()
 	}
-
 	return reflect.DeepEqual(val, reflect.Zero(v.Type()).Interface())
 }

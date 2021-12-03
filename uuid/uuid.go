@@ -4,7 +4,7 @@ import (
 	"github.com/google/uuid"
 )
 
-func GenUUID() string {
+func NewUUID() string {
 	u, _ := uuid.NewRandom()
 	return u.String()
 }
