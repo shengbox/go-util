@@ -13,3 +13,12 @@ func ExcelHeadChar2Index(header string) int {
 	}
 	return result
 }
+
+// Excel一行的数组格式数据中获取某一单元格的值, col格式为 AA, AB, AC, ...等
+func ColValue(row []string, col string) string {
+	index := ExcelHeadChar2Index(col)
+	if index >= len(row) {
+		return ""
+	}
+	return row[index]
+}
