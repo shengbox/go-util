@@ -3,6 +3,7 @@ module github.com/shengbox/go-util
 go 1.18
 
 require (
+	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/globalsign/mgo v0.0.0-20181015135952-eeefdecb41b8
 	github.com/google/uuid v1.3.0
 	github.com/joho/godotenv v1.4.0
