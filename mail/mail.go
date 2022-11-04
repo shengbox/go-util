@@ -1,44 +1,30 @@
 package mail
 
 import (
-	"fmt"
-	"strings"
-
 	"gopkg.in/gomail.v2"
 )
 
-type Options struct {
-	MailHost string
-	MailPort int
-	MailUser string // 发件人
-	MailPass string // 发件人密码
-	MailTo   string // 收件人 多个用,分割
-	Subject  string // 邮件主题
-	Body     string // 邮件内容
+type Email struct {
+	Host     string
+	Port     int
+	Username string
+	Password string
 }
 
-func Send(o *Options) error {
-
+func (e *Email) Send(subject, body string, to, attachs []string) error {
 	m := gomail.NewMessage()
-
 	//设置发件人
-	m.SetHeader("From", o.MailUser)
-
+	m.SetHeader("From", e.Username)
 	//设置发送给多个用户
-	mailArrTo := strings.Split(o.MailTo, ",")
-	m.SetHeader("To", mailArrTo...)
-
+	m.SetHeader("To", to...)
 	//设置邮件主题
-	m.SetHeader("Subject", o.Subject)
-
+	m.SetHeader("Subject", subject)
 	//设置邮件正文
-	m.SetBody("text/html", o.Body)
-
-	d := gomail.NewDialer(o.MailHost, o.MailPort, o.MailUser, o.MailPass)
-
-	err := d.DialAndSend(m)
-	if err != nil {
-		fmt.Println(err)
+	m.SetBody("text/html", body)
+	for _, attach := range attachs {
+		m.Attach(attach)
 	}
+	d := gomail.NewDialer(e.Host, e.Port, e.Username, e.Password)
+	err := d.DialAndSend(m)
 	return err
 }

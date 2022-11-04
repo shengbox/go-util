@@ -8,7 +8,7 @@ import (
 )
 
 // 加密 aes_128_cbc
-func AseEncrypt(encryptStr string, key []byte, iv string) (string, error) {
+func AesEncrypt(encryptStr string, key []byte, iv string) (string, error) {
 	encryptBytes := []byte(encryptStr)
 	block, err := aes.NewCipher(key)
 	if err != nil {
@@ -25,7 +25,7 @@ func AseEncrypt(encryptStr string, key []byte, iv string) (string, error) {
 }
 
 // 解密
-func AseDecrypt(decryptStr string, key []byte, iv string) (string, error) {
+func AesDecrypt(decryptStr string, key []byte, iv string) (string, error) {
 	decryptBytes, err := base64.URLEncoding.DecodeString(decryptStr)
 	if err != nil {
 		return "", err
