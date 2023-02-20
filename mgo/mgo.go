@@ -82,10 +82,10 @@ func CountAll(db, collection string, query interface{}) (int, error) {
 	return c.Find(query).Count()
 }
 
-func Distinct(db, collection string, query, selector interface{}, result interface{}) error {
+func Distinct(db, collection string, query, selector interface{}, distinctKey string, result interface{}) error {
 	ms, c := connect(db, collection)
 	defer ms.Close()
-	return c.Find(query).Select(selector).Distinct("month", result)
+	return c.Find(query).Select(selector).Distinct(distinctKey, result)
 }
 
 func Update(db, collection string, query, update interface{}) error {
