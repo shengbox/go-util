@@ -3,6 +3,7 @@ package mgo
 import (
 	"log"
 	"os"
+	"strings"
 
 	"github.com/globalsign/mgo"
 	_ "github.com/joho/godotenv/autoload"
@@ -15,14 +16,19 @@ var (
 
 func init() {
 	host := os.Getenv("mongodb.host")
+	authDb := os.Getenv("mongodb.authdb")
+	if authDb == "" {
+		authDb = "admin"
+	}
 	if host != "" {
 		DbName = os.Getenv("mongodb.database")
 		diaInfo := &mgo.DialInfo{
-			Addrs:     []string{host},
-			Database:  "admin",
-			Username:  os.Getenv("mongodb.username"),
-			Password:  os.Getenv("mongodb.password"),
-			PoolLimit: 3,
+			Addrs:          strings.Split(host, ","),
+			Database:       authDb,
+			Username:       os.Getenv("mongodb.username"),
+			Password:       os.Getenv("mongodb.password"),
+			PoolLimit:      3,
+			ReplicaSetName: os.Getenv("mongodb.replicaSet"),
 		}
 		//mongolog := log.New(os.Stderr, "MONGO ", log.LstdFlags)
 		//mgo.SetLogger(mongolog)
