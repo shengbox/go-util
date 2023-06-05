@@ -70,8 +70,8 @@ func PrivateDecrypt(decryptStr string, path string) (string, error) {
 	decryptBytes, err := base64.URLEncoding.DecodeString(decryptStr)
 
 	//对密文进行解密
-	decrypted, _ := rsa.DecryptPKCS1v15(rand.Reader, privateKey, decryptBytes)
+	decrypted, err := rsa.DecryptPKCS1v15(rand.Reader, privateKey, decryptBytes)
 
 	//返回明文
-	return string(decrypted), nil
+	return string(decrypted), err
 }
