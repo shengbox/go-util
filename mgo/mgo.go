@@ -70,6 +70,12 @@ func FindPage(db, collection string, query, selector interface{}, pageNum, pageS
 	return count, err
 }
 
+func FindLimit(db, collection string, query, selector interface{}, limit int, result interface{}) error {
+	ms, c := connect(db, collection)
+	defer ms.Close()
+	return c.Find(query).Select(selector).Limit(limit).All(result)
+}
+
 func FindAll(db, collection string, query, selector interface{}, result interface{}) error {
 	ms, c := connect(db, collection)
 	defer ms.Close()
