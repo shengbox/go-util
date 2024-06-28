@@ -1,6 +1,7 @@
 package funasr
 
 import (
+	"crypto/tls"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -43,12 +44,13 @@ type ResultHandler func(res TextSeg)
 func SpeechToText(path string, f ResultHandler) (string, error) {
 	header := http.Header{}
 	header.Set("Origin", fmt.Sprintf("https://%s", Host)) // 设置来源
-	conn, _, err := websocket.DefaultDialer.Dial(fmt.Sprintf("wss://%s/", Host), header)
+	dialer := websocket.DefaultDialer
+	dialer.TLSClientConfig = &tls.Config{InsecureSkipVerify: true}
+	conn, _, err := dialer.Dial(fmt.Sprintf("wss://%s/", Host), header)
 	if err != nil {
 		log.Println("连接失败:", err)
 		return "", err
 	}
-	log.Println("连接成功!")
 	defer conn.Close()
 
 	result := ""
