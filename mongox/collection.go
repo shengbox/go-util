@@ -52,6 +52,14 @@ func (c *Collection) Remove(filter any) error {
 	return nil
 }
 
+func (c *Collection) RemoveAll(filter any) error {
+	_, err := c.collection.DeleteMany(context.TODO(), filter, nil)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
 func (c *Collection) Aggregate(pipeline, result any) error {
 	cur, err := c.collection.Aggregate(context.TODO(), pipeline)
 	if err != nil {
