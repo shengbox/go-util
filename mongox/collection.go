@@ -8,6 +8,7 @@ import (
 	"strings"
 
 	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
@@ -22,11 +23,34 @@ func (c *Collection) Find(filter interface{}) *Session {
 	return &Session{filter: filter, collection: c.collection}
 }
 
+// 废弃
 func (s *Collection) Update(filter, update any) error {
 	_, err := s.collection.UpdateMany(context.TODO(), filter, update)
 	return err
 }
 
+func (s *Collection) UpdateOne(filter, update any) (*mongo.UpdateResult, error) {
+	updateResult, err := s.collection.UpdateOne(context.TODO(), filter, update)
+	if err != nil {
+		return nil, err
+	}
+	if updateResult.MatchedCount != 1 {
+		return nil, errors.New("update failed, expected 1 but got 0")
+	}
+	return updateResult, nil
+}
+
+func (s *Collection) UpdateMany(filter, update any) (*mongo.UpdateResult, error) {
+	updateResult, err := s.collection.UpdateMany(context.TODO(), filter, update)
+	return updateResult, err
+}
+
+func (s *Collection) UpdateByID(id primitive.ObjectID, update any) (*mongo.UpdateResult, error) {
+	updateResult, err := s.collection.UpdateByID(context.TODO(), id, update)
+	return updateResult, err
+}
+
+// 废弃
 func (s *Collection) UpdateAll(filter, update any) error {
 	_, err := s.collection.UpdateMany(context.TODO(), filter, update)
 	return err

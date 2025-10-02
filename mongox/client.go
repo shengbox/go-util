@@ -26,3 +26,7 @@ func Connect(ctx context.Context, uri string) (*Client, error) {
 func (c *Client) Database(db string) *Database {
 	return &Database{database: c.client.Database(db)}
 }
+
+func (c *Client) StartSession() (mongo.Session, error) {
+	return c.client.StartSession()
+}
