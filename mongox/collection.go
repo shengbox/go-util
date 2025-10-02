@@ -45,8 +45,8 @@ func (s *Collection) UpdateMany(filter, update any) (*mongo.UpdateResult, error)
 	return updateResult, err
 }
 
-func (s *Collection) UpdateByID(id primitive.ObjectID, update any) (*mongo.UpdateResult, error) {
-	updateResult, err := s.collection.UpdateByID(context.TODO(), id, update)
+func (s *Collection) UpdateByID(ctx context.Context, id primitive.ObjectID, update any) (*mongo.UpdateResult, error) {
+	updateResult, err := s.collection.UpdateByID(ctx, id, update)
 	return updateResult, err
 }
 
